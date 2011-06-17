@@ -21,7 +21,7 @@ class Jco_getfileinfos {
 	* Data returned from the plugin.
 	*
 	* @access	public
-	* @var string
+	* @var 		string
 	*/
 	public $return_data = "";
 	
@@ -32,8 +32,8 @@ class Jco_getfileinfos {
 	/**
 	* Support for EE prior to 2.1.3
 	*
-	* @access public
-	* @return void
+	* @access 	public
+	* @return 	void
 	* method first seen used by Stephen Lewis (https://github.com/experience/you_are_here.ee2_addon)
 	*/
 	public function Jco_getfileinfos()
@@ -46,7 +46,7 @@ class Jco_getfileinfos {
 	* Constructor.
 	*
 	* @access	public
-	* @return	void
+	* @return	string
 	*/
 	function __construct()
 	{
@@ -63,7 +63,7 @@ class Jco_getfileinfos {
 	* Return number of items in category.
 	*
 	* @access	public
-	* @return	parsed array
+	* @return	string
 	*/
 	public function Retrieve_file_infos($file)
 	{
@@ -103,7 +103,7 @@ class Jco_getfileinfos {
 		//get file date using CI File helper (dates can be formatted by default)
 		$file_date = $infos['date'];
 		
-		//building variables for variables output in tag pair
+		//building variables array for variables output in tag pair
 		$variables[0] = array(
 			'file_name' 		=>	$file_name,
 			'file_extension' 	=>	$file_extension,
