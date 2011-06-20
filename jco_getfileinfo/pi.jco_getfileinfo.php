@@ -3,7 +3,7 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
-  'pi_name' => 'JCO Get File Infos',
+  'pi_name' => 'JCO Get File Info',
   'pi_version' =>'1.0',
   'pi_author' =>'Jerome Coupe',
   'pi_author_url' => 'http://twitter.com/jeromecoupe/',
@@ -193,5 +193,5 @@ class Jco_getfileinfo {
 	}
 
 
-/* End of file pi.jco_getfileinfos.php */ 
-/* Location: ./system/expressionengine/third_party/plugin_name/pi.jco_getfileinfos.php */
+/* End of file pi.jco_getfileinfo.php */ 
+/* Location: ./system/expressionengine/third_party/jco_getfileinfo/pi.jco_getfileinfo.php */
