@@ -1,5 +1,5 @@
 #Description:
-Simple EE2 only plugin returning a bunch of infos about any given file (file name / server path / size / date)
+Simple EE2 only plugin returning a bunch of infos about any given file (file name / file extension / file size / file date / file server path)
 
 #Example:
 	{exp:jco_getfileinfo filename="{blogpost_image}"}
