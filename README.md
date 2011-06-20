@@ -2,13 +2,13 @@
 Simple EE2 only plugin returning a bunch of infos about any given file (file name / server path / size / date)
 
 #Example:
-	{exp:jco_getfileinfos filename="{blogpost_image}"}
+	{exp:jco_getfileinfo filename="{blogpost_image}"}
 		{file_name}
 		{file_extension}
 		{file_path}
 		{file_size}
 		{file_date format="%l %F %Y"}
-	{/exp:jco_getfileinfos}
+	{/exp:jco_getfileinfo}
 
 #Parameter
 `file="{custom field}"`

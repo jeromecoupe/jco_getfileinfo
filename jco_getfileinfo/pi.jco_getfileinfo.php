@@ -8,11 +8,11 @@ $plugin_info = array(
   'pi_author' =>'Jerome Coupe',
   'pi_author_url' => 'http://twitter.com/jeromecoupe/',
   'pi_description' => 'Returns information about any given file',
-  'pi_usage' => Jco_getfileinfos::usage()
+  'pi_usage' => Jco_getfileinfo::usage()
   );
 
 
-class Jco_getfileinfos {
+class Jco_getfileinfo {
 	
 	/* --------------------------------------------------------------
 	* RETURNED DATA
@@ -36,7 +36,7 @@ class Jco_getfileinfos {
 	* @return 	void
 	* method first seen used by Stephen Lewis (https://github.com/experience/you_are_here.ee2_addon)
 	*/
-	public function Jco_getfileinfos()
+	public function Jco_getfileinfo()
 	{
 		$this->__construct();
 	}
@@ -51,7 +51,7 @@ class Jco_getfileinfos {
 	function __construct()
 	{
 		$this->EE =& get_instance();
-		$this->return_data = $this->Retrieve_file_infos($this->EE->TMPL->fetch_param('filename'));
+		$this->return_data = $this->Retrieve_file_info($this->EE->TMPL->fetch_param('filename'));
 	}
 	
 	
@@ -65,7 +65,7 @@ class Jco_getfileinfos {
 	* @access	public
 	* @return	string
 	*/
-	public function Retrieve_file_infos($file)
+	public function Retrieve_file_info($file)
 	{
 		
 		//get the relative url (without the "http://domain" part)
@@ -159,13 +159,13 @@ class Jco_getfileinfos {
 			
 			Example:
 			
-			{exp:jco_getfileinfos filename="{custom_field}"}
+			{exp:jco_getfileinfo filename="{custom_field}"}
 				{file_name}
 				{file_extension}
 				{file_path}
 				{file_size}
 				{file_date}
-			{/exp:jco_getfileinfos}
+			{/exp:jco_getfileinfo}
 	
 			------------------------------------------------------
 			
