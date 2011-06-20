@@ -85,17 +85,15 @@ class Jco_getfileinfo {
 		$this->EE->load->helper('file');
 		$infos = get_file_info($file);
 		
-		//get file size using CI File helper & format it
-		$file_size = $this->_format_bytes($infos['size']);
+		//get file size using CI File helper & format it using CI Number Helper
+		$this->EE->load->helper('number');
+		$file_size = byte_format($infos['size'],0);
 		
 		//get file name using CI File helper
 		$file_name = $infos['name'];
 		
 		//get file extension using php function path info
 		$file_extension = pathinfo($file, PATHINFO_EXTENSION);
-		
-		//get file server path using php function path info
-		//$file_path = pathinfo($file, PATHINFO_DIRNAME);
 		
 		//get file server path using CI File helper
 		$file_path = $infos['server_path'];
@@ -116,25 +114,6 @@ class Jco_getfileinfo {
 	}
 	
 	/* --------------------------------------------------------------
-	* PRIVATE FUNCTIONS
-	* ------------------------------------------------------------ */
-	
-	/**
-	* Check if category_id is a number and if it exists in DB
-	*
-	* @access	private
-	* @return	string
-	*/
-	private function _format_bytes($bytes)
-	{
-		if ($bytes < 1024) return $bytes.'&nbsp;B';
-		elseif ($bytes < 1048576) return round($bytes / 1024, 0).'&nbsp;KB';
-		elseif ($bytes < 1073741824) return round($bytes / 1048576, 2).'&nbsp;MB';
-		elseif ($bytes < 1099511627776) return round($bytes / 1073741824, 2).'&nbsp;GB';
-		else return round($bytes / 1099511627776, 2).'&nbsp;TB';
-	}
-	
-	/* --------------------------------------------------------------
 	* PLUGIN USAGE
 	* ------------------------------------------------------------ */
 
@@ -146,7 +125,7 @@ class Jco_getfileinfo {
 	 * @access	public
 	 * @return	string
 	 */
-	function usage()
+	public function usage()
 	{
 		ob_start(); 
 		?>
