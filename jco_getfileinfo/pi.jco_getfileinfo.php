@@ -90,7 +90,9 @@ class Jco_getfileinfo {
 		$file_size = byte_format($infos['size'],0);
 		
 		//get file name using CI File helper
-		$file_name = $infos['name'];
+		//added basename wrapper for IIS support ... otherwise IIS returns part of the path
+		//ref: http://devot-ee.com/add-ons/support/jco-get-file-info/viewthread/2216/
+		$file_name = basename($infos['name']);
 		
 		//get file extension using php function path info
 		$file_extension = pathinfo($file, PATHINFO_EXTENSION);
