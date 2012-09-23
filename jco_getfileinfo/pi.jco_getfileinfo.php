@@ -161,7 +161,7 @@ class Jco_getfileinfo {
 			
 			{exp:jco_getfileinfo filename="{custom_field}"}
 				{file_name}
-				{file_shortname}
+				{file_filename}
 				{file_extension}
 				{file_path}
 				{file_size}
@@ -177,7 +177,7 @@ class Jco_getfileinfo {
 			
 			Variables:
 			{file_name}
-			{file_shortname}
+			{file_filename}
 			{file_extension}
 			{file_path}
 			{file_size}
