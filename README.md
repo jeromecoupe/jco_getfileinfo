@@ -4,6 +4,7 @@ Simple EE2 only plugin returning a bunch of infos about any given file (file nam
 #Example:
 	{exp:jco_getfileinfo filename="{blogpost_image}"}
 		{file_name}
+		{file_filename}
 		{file_extension}
 		{file_path}
 		{file_size}
@@ -21,6 +22,10 @@ Simple EE2 only plugin returning a bunch of infos about any given file (file nam
 `{file_name}`
 
 Filename
+
+`{file_filename}`
+
+Filename (without extension)
 
 `{file_extension}`
 

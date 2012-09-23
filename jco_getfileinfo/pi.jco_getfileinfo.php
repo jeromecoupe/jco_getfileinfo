@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'JCO Get File Info',
-  'pi_version' =>'1.0',
+  'pi_version' =>'1.1',
   'pi_author' =>'Jerome Coupe',
   'pi_author_url' => 'http://twitter.com/jeromecoupe/',
   'pi_description' => 'Returns information about any given file',
@@ -51,7 +51,14 @@ class Jco_getfileinfo {
 	function __construct()
 	{
 		$this->EE =& get_instance();
-		$this->return_data = $this->Retrieve_file_info($this->EE->TMPL->fetch_param('filename'));
+
+		//load helpers
+		// File helper: <http://codeigniter.com/user_guide/helpers/file_helper.html>
+		//
+		$this->EE->load->helper(array('file','number'));
+
+		$file = trim($this->EE->TMPL->fetch_param('filename'));
+		$this->return_data = $this->Retrieve_file_info($file);
 	}
 	
 	
@@ -67,26 +74,29 @@ class Jco_getfileinfo {
 	*/
 	public function Retrieve_file_info($file)
 	{
-		
-		//get the relative url (without the "http://domain" part)
+		//file as passed by EE
+		$this->Log_item('URL as passed by EE - '.$file);
+
+		//get the relative url (without the "http://domain" part) using parse url
 		$file = parse_url($file);
 		$file = $file["path"];
+		$this->Log_item('Domain stripped out - '.$file);
 		
 		//make sure that it's an absolute server path. If not, make it one
-		$file = (stristr($file,$_SERVER['DOCUMENT_ROOT'])) ? $file : $_SERVER['DOCUMENT_ROOT'].$file;
+		$file = (stristr($file,$_SERVER['DOCUMENT_ROOT'])) ? $file : rtrim($_SERVER['DOCUMENT_ROOT'], '/').$file;
+		$this->Log_item('Full server path to file - '.$file);
 		
 		//remove duplicate slashes
 		$file = str_replace("//", "/", $file);
+		$this->Log_item('Removed duplicate slashes - '.$file);
 		
 		//return error if file does not exists
-		if (!file_exists($file)) return "file cannot be found: please check your settings and code";
+		if (!file_exists($file)) return "file cannot be found: please check template debugger for 'JCO GET FILE INFO' and verify your code";
 		
 		//load CI file helper and get file infos using it
-		$this->EE->load->helper('file');
 		$infos = get_file_info($file);
 		
 		//get file size using CI File helper & format it using CI Number Helper
-		$this->EE->load->helper('number');
 		$file_size = byte_format($infos['size'],0);
 		
 		//get file name using CI File helper
@@ -96,6 +106,9 @@ class Jco_getfileinfo {
 		
 		//get file extension using php function path info
 		$file_extension = pathinfo($file, PATHINFO_EXTENSION);
+
+		//get filename without extension
+		$file_filename =  basename($file_name,'.'.$file_extension);
 		
 		//get file server path using CI File helper
 		$file_path = $infos['server_path'];
@@ -106,6 +119,7 @@ class Jco_getfileinfo {
 		//building variables array for variables output in tag pair
 		$variables[0] = array(
 			'file_name' 		=>	$file_name,
+			'file_filename' 	=>	$file_filename,
 			'file_extension' 	=>	$file_extension,
 			'file_path' 		=>	$file_path,
 			'file_size' 		=>	$file_size,
@@ -113,6 +127,11 @@ class Jco_getfileinfo {
 			);
 		
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $variables);
+	}
+
+	public function Log_item($message)
+	{
+		$this->EE->TMPL->log_item('&nbsp;&nbsp;- JCO GET FILE INFO: '.$message);
 	}
 	
 	/* --------------------------------------------------------------
@@ -142,6 +161,7 @@ class Jco_getfileinfo {
 			
 			{exp:jco_getfileinfo filename="{custom_field}"}
 				{file_name}
+				{file_shortname}
 				{file_extension}
 				{file_path}
 				{file_size}
@@ -157,6 +177,7 @@ class Jco_getfileinfo {
 			
 			Variables:
 			{file_name}
+			{file_shortname}
 			{file_extension}
 			{file_path}
 			{file_size}
