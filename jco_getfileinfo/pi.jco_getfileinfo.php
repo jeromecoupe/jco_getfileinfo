@@ -75,24 +75,24 @@ class Jco_getfileinfo {
 	public function Retrieve_file_info($file)
 	{
 		//file as passed by EE
-		$this->Log_item('URL as passed by EE - '.$file);
+		$this->_log_item('URL as passed by EE - '.$file);
 
 		//get the relative url (without the "http://domain" part) using parse url
 		$file = parse_url($file);
 		$file = $file["path"];
-		$this->Log_item('Domain stripped out - '.$file);
+		$this->_log_item('Domain stripped out - '.$file);
 
 		//make sure that it's an absolute server path. If not, make it one
 		$file = (stristr($file,$_SERVER['DOCUMENT_ROOT'])) ? $file : rtrim($_SERVER['DOCUMENT_ROOT'], '/').$file;
-		$this->Log_item('Full server path to file - '.$file);
+		$this->_log_item('Full server path to file - '.$file);
 
 		//remove duplicate slashes
 		$file = str_replace("//", "/", $file);
-		$this->Log_item('Removed duplicate slashes - '.$file);
+		$this->_log_item('Removed duplicate slashes - '.$file);
 
 		//encode URL to deal with special characters
 		$file = urldecode($file);
-		$this->Log_item('Decoded URL (special chars) - '.$file);
+		$this->_log_item('Decoded URL (special chars) - '.$file);
 
 		//return error if file does not exists
 		if (!file_exists($file)) return "file cannot be found: please check template debugger for 'JCO GET FILE INFO' and verify your code";
@@ -133,7 +133,7 @@ class Jco_getfileinfo {
 		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $variables);
 	}
 
-	public function Log_item($message)
+	private function _log_item($message)
 	{
 		$this->EE->TMPL->log_item('&nbsp;&nbsp;- JCO GET FILE INFO: '.$message);
 	}
