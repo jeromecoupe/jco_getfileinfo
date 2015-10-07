@@ -3,13 +3,13 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
-  'pi_name' => 'JCO Get File Info',
-  'pi_version' =>'1.2',
-  'pi_author' =>'Jerome Coupe',
-  'pi_author_url' => 'http://twitter.com/jeromecoupe/',
-  'pi_description' => 'Returns information about any given file',
-  'pi_usage' => Jco_getfileinfo::usage()
-  );
+  'pi_name'         => 'JCO Get File Info',
+  'pi_version'      => '1.2.1',
+  'pi_author'       => 'Jérôme Coupé',
+  'pi_author_url'   => 'http://webstoemp.com',
+  'pi_description'  => 'Returns information about any given file',
+  'pi_usage'        => Jco_getfileinfo::usage()
+);
 
 
 class Jco_getfileinfo {
@@ -30,19 +30,6 @@ class Jco_getfileinfo {
 	* ------------------------------------------------------------ */
 
 	/**
-	* Support for EE prior to 2.1.3
-	*
-	* @access 	public
-	* @return 	void
-	* method first seen used by Stephen Lewis (https://github.com/experience/you_are_here.ee2_addon)
-	*/
-	public function Jco_getfileinfo()
-	{
-		$this->__construct();
-	}
-
-
-	/**
 	* Constructor.
 	*
 	* @access	public
@@ -50,14 +37,10 @@ class Jco_getfileinfo {
 	*/
 	function __construct()
 	{
-		$this->EE =& get_instance();
+		//load Codeigniter helpers (file and number)
+		ee()->load->helper(array('file','number'));
 
-		//load helpers
-		// File helper: <http://codeigniter.com/user_guide/helpers/file_helper.html>
-		//
-		$this->EE->load->helper(array('file','number'));
-
-		$file = trim($this->EE->TMPL->fetch_param('filename'));
+		$file = trim(ee()->TMPL->fetch_param('filename'));
 		$this->return_data = $this->Retrieve_file_info($file);
 	}
 
@@ -122,20 +105,20 @@ class Jco_getfileinfo {
 
 		//building variables array for variables output in tag pair
 		$variables[0] = array(
-			'file_name' 		=>	$file_name,
-			'file_filename' 	=>	$file_filename,
-			'file_extension' 	=>	$file_extension,
-			'file_path' 		=>	$file_path,
-			'file_size' 		=>	$file_size,
-			'file_date' 		=>	$file_date
+			'file_name'       =>  $file_name,
+			'file_filename'   =>  $file_filename,
+			'file_extension'  =>  $file_extension,
+			'file_path'       =>  $file_path,
+			'file_size'       =>  $file_size,
+			'file_date'       =>  $file_date
 			);
 
-		return $this->EE->TMPL->parse_variables($this->EE->TMPL->tagdata, $variables);
+		return ee()->TMPL->parse_variables(ee()->TMPL->tagdata, $variables);
 	}
 
 	private function _log_item($message)
 	{
-		$this->EE->TMPL->log_item('&nbsp;&nbsp;- JCO GET FILE INFO: '.$message);
+		ee()->TMPL->log_item('&nbsp;&nbsp;- JCO GET FILE INFO: '.$message);
 	}
 
 	/* --------------------------------------------------------------
@@ -150,7 +133,7 @@ class Jco_getfileinfo {
 	 * @access	public
 	 * @return	string
 	 */
-	public function usage()
+	public static function usage()
 	{
 		ob_start();
 		?>
@@ -185,7 +168,7 @@ class Jco_getfileinfo {
 			{file_extension}
 			{file_path}
 			{file_size}
-			{file_date format="%D %m %Y"}
+			{file_date format="%l %F %j, %Y"}
 
 		<?php
 		$buffer = ob_get_contents();
