@@ -30,6 +30,7 @@ Simple EE2 only plugin returning a bunch of infos about any given file (file nam
 
 # Changelog
 
-- version 1.0
+- version 1.0: initial version
 - version 1.1: added support for `{file_filename}`
 - version 1.2: fixed a bug with special characters in file names
+- version 1.2.1: cleanup and compatibility with PHP 5.5 (strict)
